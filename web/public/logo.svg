@@ -1,9 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 40" role="img" aria-label="Scotch Roam">
-  <style>text{font-family:'Fraunces',Georgia,serif;fill:#C28A3D}</style>
-  <g stroke="#C28A3D" stroke-width="1.5" fill="none" transform="translate(4,6)">
-    <path d="M6 2h10v6l-1.5 3v12h-7V11L6 8V2Z"/>
-    <path d="M8 23h6"/>
-    <circle cx="11" cy="1" r="1" fill="#C28A3D"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 64" role="img" aria-label="Scotch Roam">
+  <!-- Brand mark: Glencairn glass in a rounded tile -->
+  <rect x="8" y="8" width="48" height="48" rx="12" fill="#C28A3D"/>
+  <g fill="none" stroke="#FBF7F0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" transform="translate(20,16)">
+    <path d="M6 2h12v8l-2 4v12h-8V14l-2-4V2Z"/>
+    <path d="M8 26h8"/>
+    <path d="M6 6h12"/>
   </g>
-  <text x="30" y="27" font-size="20" font-weight="600">Scotch Roam</text>
+  <!-- Wordmark -->
+  <text x="70" y="34" font-family="Georgia, 'Times New Roman', serif" font-size="26" font-weight="600" fill="#3A2A1A" letter-spacing="0.5">Roam</text>
+  <text x="70" y="50" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="9.5" font-weight="600" letter-spacing="2.6" fill="#8A6D3B">SCOTCH</text>
 </svg>
