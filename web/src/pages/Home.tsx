@@ -16,7 +16,7 @@ const ACTIONS = [
   { to: "/learn", title: "Learn the Basics", sub: "Scotch 101", Icon: BookIcon, c: "#9AA7B2", c2: "#6b7a85" },
 ];
 
-const HERO = "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=1000&q=80&auto=format";
+const HERO = "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=1000&q=80&auto=format";
 
 export default function Home() {
   const { user } = useAuth();
