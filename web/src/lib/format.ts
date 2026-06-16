@@ -1,4 +1,4 @@
-// Format utilities for Bourbon Roam.
+// Format utilities for Scotch Roam.
 
 // Format an age statement for display (returns "NAS" — No Age Statement — when absent).
 export function formatAge(age?: string): string {

@@ -155,7 +155,7 @@ export async function mfaEnabled(): Promise<boolean> {
 export async function startTotpSetup(): Promise<{ uri: string; secret: string }> {
   const out = await setUpTOTP();
   const secret = out.sharedSecret;
-  const uri = out.getSetupUri("Bourbon Roam").toString();
+  const uri = out.getSetupUri("Scotch Roam").toString();
   return { uri, secret };
 }
 export async function confirmTotpSetup(code: string) {

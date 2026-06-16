@@ -6,7 +6,7 @@ import AuthForm from "../components/AuthForm";
 import LegalFooter from "../components/LegalFooter";
 import { useAuth } from "../lib/auth";
 
-// Bourbon barrel / rickhouse hero image.
+// Scottish distillery hero image.
 const HERO_IMG =
   "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=1100&q=80&auto=format";
 
@@ -18,7 +18,7 @@ const OCCASIONS = [
 ];
 
 const FEATURES = [
-  { Icon: BookIcon, title: "Learn about Bourbon", body: "Mash bills, distilleries, tasting technique — no snobbery required.", c: "#5c7a5a", c2: "#3a5438" },
+  { Icon: BookIcon, title: "Learn about Scotch", body: "Regions, distilleries, tasting technique — no snobbery required.", c: "#5c7a5a", c2: "#3a5438" },
   { Icon: UsersIcon, title: "Host live tastings", body: "Everyone joins by QR on their phones, rates each pour together, and scores reveal at once.", c: "#722F37", c2: "#4a1c22" },
   { Icon: GlassIcon, title: "Score & quiz", body: "Rate appearance, nose, palate, and finish — then a quick quiz crowns the night's whiskey expert.", c: "#5E8C7D", c2: "#3c6457" },
   { Icon: CameraIcon, title: "Scan any bottle", body: "Snap a label to pull up its full profile and drop it straight into your flight.", c: "#9AA7B2", c2: "#6b7a85" },
@@ -46,7 +46,7 @@ export default function Landing() {
         <div className="land-hero-photo">
           <img
             src={HERO_IMG}
-            alt="Bourbon barrels aging in a rickhouse at golden hour"
+            alt="Highland distillery with copper pot stills at golden hour"
             loading="eager"
             onError={(e) => (e.currentTarget.closest(".land-hero-photo") as HTMLElement)?.classList.add("noimg")}
           />

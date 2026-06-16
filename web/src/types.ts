@@ -1,4 +1,4 @@
-// Canonical domain types for Bourbon Roam (web).
+// Canonical domain types for Scotch Roam (web).
 // Mirrors shared/src/types.ts — the single source of truth.
 
 export type BourbonStyle =

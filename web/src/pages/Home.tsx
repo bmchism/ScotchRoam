@@ -13,7 +13,7 @@ const ACTIONS = [
   { to: "/scan", title: "Scan a Bottle", sub: "Identify it instantly", Icon: CameraIcon, c: "#5E8C7D", c2: "#3c6457" },
   { to: "/learn/process", title: "How It's Made", sub: "The grain-to-glass journey", Icon: BottleMark, c: "#A66A33", c2: "#79491f" },
   { to: "/learn/distilleries", title: "Distilleries", sub: "Meet the producers", Icon: BarrelIcon, c: "#8A6D3B", c2: "#5f4a24" },
-  { to: "/learn", title: "Learn the Basics", sub: "Bourbon 101", Icon: BookIcon, c: "#9AA7B2", c2: "#6b7a85" },
+  { to: "/learn", title: "Learn the Basics", sub: "Scotch 101", Icon: BookIcon, c: "#9AA7B2", c2: "#6b7a85" },
 ];
 
 const HERO = "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=1000&q=80&auto=format";
@@ -32,7 +32,7 @@ export default function Home() {
         {/* Photo hero with greeting */}
         <motion.div className="home-hero" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
           <div className="home-hero-photo">
-            <img src={HERO} alt="Bourbon barrels in a rickhouse at golden hour" loading="eager"
+            <img src={HERO} alt="Scottish highlands and distillery at golden hour" loading="eager"
               onError={(e) => { (e.currentTarget.closest(".home-hero-photo") as HTMLElement)?.classList.add("noimg"); }} />
           </div>
           <div className="home-hero-text">
