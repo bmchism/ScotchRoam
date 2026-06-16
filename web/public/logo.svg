@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 64" role="img" aria-label="Bourbon Roam">
+  <!-- Brand mark: bourbon barrel in a rounded tile (matches favicon) -->
+  <rect x="8" y="8" width="48" height="48" rx="12" fill="#8B4513"/>
+  <g fill="none" stroke="#FBF7F0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" transform="translate(8,8)">
+    <!-- Barrel shape with oak staves -->
+    <ellipse cx="24" cy="12" rx="10" ry="5"/>
+    <path d="M 14 12 L 14 32 Q 14 36 18 36 L 30 36 Q 34 36 34 32 L 34 12"/>
+    <ellipse cx="24" cy="36" rx="10" ry="5" opacity="0.7"/>
+    <!-- Barrel bands -->
+    <path d="M 13 18 Q 14 19 24 19 Q 34 19 35 18"/>
+    <path d="M 13 28 Q 14 29 24 29 Q 34 29 35 28"/>
+    <!-- Oak stave accent -->
+    <line x1="24" y1="12" x2="24" y2="36" stroke-width="1.8"/>
+  </g>
+  <!-- Wordmark -->
+  <text x="70" y="34" font-family="Georgia, 'Times New Roman', serif" font-size="26" font-weight="600" fill="#3A2A1A" letter-spacing="0.5">Roam</text>
+  <text x="70" y="50" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="9.5" font-weight="600" letter-spacing="2.6" fill="#8B4513">BOURBON</text>
+</svg>

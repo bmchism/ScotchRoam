@@ -1,0 +1,18 @@
+import type { Distillery } from "../types";
+export const wineries: Record<string, Distillery> = {
+  "glenfiddich": { id: "glenfiddich", name: "Glenfiddich Distillery", region: "Speyside, Scotland", masterDistiller: "Brian Kinsman", notes: "World's best-selling single malt. Family-owned (William Grant & Sons) since 1887. Pioneered the single malt category." },
+  "macallan": { id: "macallan", name: "The Macallan Distillery", region: "Speyside, Scotland", masterDistiller: "Kirsteen Campbell", notes: "Famous for exceptional sherry cask program. Curiously small stills produce a rich, oily spirit." },
+  "laphroaig": { id: "laphroaig", name: "Laphroaig Distillery", region: "Islay, Scotland", notes: "The most divisive Scotch — intensely peated, medicinal, maritime. Prince Charles's favorite (Royal Warrant holder)." },
+  "lagavulin": { id: "lagavulin", name: "Lagavulin Distillery", region: "Islay, Scotland", notes: "16-year-old is considered Islay's masterpiece. Slow distillation in small stills produces richness beneath the smoke." },
+  "ardbeg": { id: "ardbeg", name: "Ardbeg Distillery", region: "Islay, Scotland", masterDistiller: "Dr. Bill Lumsden", notes: "The most heavily peated of the Islay Big Three. Cult following. Committee releases are legendary." },
+  "highland-park": { id: "highland-park", name: "Highland Park Distillery", region: "Orkney, Scotland", notes: "Scotland's most northerly distillery. Uses local Orkney peat for a heathery, floral smoke character." },
+  "talisker": { id: "talisker", name: "Talisker Distillery", region: "Isle of Skye, Scotland", notes: "The only distillery on Skye. Maritime peat, black pepper, and explosive character. 'King o' drinks' (Robert Louis Stevenson)." },
+  "glenlivet": { id: "glenlivet", name: "The Glenlivet Distillery", region: "Speyside, Scotland", notes: "The first licensed distillery in the Highlands (1824). George Smith defied smugglers to go legal. Fruity, creamy house style." },
+  "balvenie": { id: "balvenie", name: "The Balvenie Distillery", region: "Speyside, Scotland", masterDistiller: "David Stewart MBE", notes: "One of few distilleries with its own floor maltings, cooperage, and coppersmith. David Stewart is the longest-serving malt master (50+ years)." },
+  "springbank": { id: "springbank", name: "Springbank Distillery", region: "Campbeltown, Scotland", notes: "100% of production done on-site — malting, distilling, bottling. Three styles: Springbank (2.5× distilled), Longrow (peated), Hazelburn (triple-distilled)." },
+  "oban": { id: "oban", name: "Oban Distillery", region: "Highland (West), Scotland", notes: "Tiny distillery in the heart of a seaside town. One of the original Classic Malts. West Highland/maritime character." },
+  "glenmorangie": { id: "glenmorangie", name: "Glenmorangie Distillery", region: "Highland, Scotland", masterDistiller: "Dr. Bill Lumsden", notes: "Scotland's tallest stills (over 5m) produce an exceptionally light, delicate spirit. Pioneer of cask finishing." },
+  "johnnie-walker": { id: "johnnie-walker", name: "Johnnie Walker (Diageo)", region: "Scotland", notes: "The world's best-selling Scotch brand. Blends whiskies from 40+ distilleries across Scotland." },
+  "monkey-shoulder": { id: "monkey-shoulder", name: "Monkey Shoulder (William Grant)", region: "Speyside, Scotland", notes: "A blended malt of three Speyside distilleries (Glenfiddich, Balvenie, Kininvie). Designed for cocktails." },
+  "dalmore": { id: "dalmore", name: "The Dalmore Distillery", region: "Highland, Scotland", masterDistiller: "Richard Paterson", notes: "Richard Paterson — 'The Nose' — has been master blender for 50+ years. Known for Matusalem sherry finishes and the iconic stag logo." },
+};

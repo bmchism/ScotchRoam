@@ -1,0 +1,209 @@
+import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import AppBar from "../components/AppBar";
+import BottleCard from "../components/BottleCard";
+import { SkeletonList } from "../components/Skeleton";
+import Disclaimer from "../components/Disclaimer";
+import { CameraIcon } from "../icons";
+import { listBottles, bottlePopularity } from "../lib/api";
+import { syncFavorites } from "../lib/favorites";
+import { useAuth } from "../lib/auth";
+import { EXPRESSIONS, type Bottle, type Expression } from "../types";
+
+const filters: ("All" | Expression)[] = ["All", ...EXPRESSIONS];
+
+type Sort = "az" | "za" | "abv-desc" | "abv-asc" | "expr" | "pop";
+const SORTS: { v: Sort; label: string }[] = [
+  { v: "pop", label: "Most popular" },
+  { v: "az", label: "Name A–Z" },
+  { v: "za", label: "Name Z–A" },
+  { v: "abv-desc", label: "ABV high → low" },
+  { v: "abv-asc", label: "ABV low → high" },
+  { v: "expr", label: "By style" },
+];
+
+const exprIndex = (e: Expression) => EXPRESSIONS.indexOf(e);
+
+export default function Catalog() {
+  const [active, setActive] = useState<(typeof filters)[number]>("All");
+  const [all, setAll] = useState<Bottle[]>([]);
+  const [live, setLive] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [q, setQ] = useState("");
+  const [sort, setSort] = useState<Sort>("pop");
+  const [afOnly, setAfOnly] = useState(false);
+  const [favOnly, setFavOnly] = useState(false);
+  const [country, setCountry] = useState("All");
+  const [region, setRegion] = useState("All");
+  const [favs, setFavs] = useState<Set<string>>(new Set());
+  const [pop, setPop] = useState<Map<string, number>>(new Map());
+  const { user } = useAuth();
+
+  // Live favorite counts → popularity ranking (refreshes each visit).
+  useEffect(() => {
+    bottlePopularity().then(setPop).catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    let on = true;
+    listBottles().then(({ bottles, live }) => {
+      if (!on) return;
+      setAll(bottles);
+      setLive(live);
+      setLoading(false);
+    });
+    return () => {
+      on = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    syncFavorites(!!user).then((ids) => setFavs(new Set(ids))).catch(() => {});
+  }, [user]);
+
+  // Derive country and region options from the loaded data
+  const { countries, regions } = useMemo(() => {
+    const countryMap: Record<string, number> = {};
+    const regionMap: Record<string, number> = {};
+    for (const b of all) {
+      const r = b.region || "";
+      if (!r) continue;
+      const parts = r.split(",").map((s) => s.trim());
+      if (parts.length >= 2) {
+        const c = parts[parts.length - 1];
+        countryMap[c] = (countryMap[c] || 0) + 1;
+        // Use the first part as the sub-region
+        const subRegion = parts[0];
+        regionMap[subRegion] = (regionMap[subRegion] || 0) + 1;
+      } else if (r) {
+        regionMap[r] = (regionMap[r] || 0) + 1;
+      }
+    }
+    return {
+      countries: Object.entries(countryMap).sort((a, b) => b[1] - a[1]).map(([k]) => k),
+      regions: Object.entries(regionMap).sort((a, b) => b[1] - a[1]).map(([k]) => k),
+    };
+  }, [all]);
+
+  const list = useMemo(() => {
+    const needle = q.trim().toLowerCase();
+    let out = all.filter((b) => {
+      const style = b.style || b.expression || "";
+      if (active !== "All" && style !== active) return false;
+      if (afOnly && style !== "Bottled-in-Bond") return false;
+      if (favOnly && !favs.has(b.id)) return false;
+      const r = b.region || "";
+      if (country !== "All" && !r.toLowerCase().includes(country.toLowerCase())) return false;
+      if (region !== "All" && !r.toLowerCase().includes(region.toLowerCase())) return false;
+      if (needle && !`${b.name} ${b.brand || ""} ${b.producer || ""} ${b.mashBill || ""} ${r}`.toLowerCase().includes(needle)) return false;
+      return true;
+    });
+    out = [...out].sort((a, b) => {
+      switch (sort) {
+        case "za": return b.name.localeCompare(a.name);
+        case "abv-desc": return (b.abv || 0) - (a.abv || 0) || a.name.localeCompare(b.name);
+        case "abv-asc": return (a.abv || 0) - (b.abv || 0) || a.name.localeCompare(b.name);
+        case "expr": return exprIndex(a.style || a.expression || "Straight") - exprIndex(b.style || b.expression || "Straight") || a.name.localeCompare(b.name);
+        case "pop": return (pop.get(b.id) ?? 0) - (pop.get(a.id) ?? 0) || a.name.localeCompare(b.name);
+        default: return a.name.localeCompare(b.name);
+      }
+    });
+    return out;
+  }, [all, active, q, sort, afOnly, favOnly, country, region, favs, pop]);
+
+  const afCount = useMemo(() => all.filter((b) => (b.style || b.expression) === "Bottled-in-Bond").length, [all]);
+
+  return (
+    <>
+      <AppBar />
+      <main className="screen">
+        <div className="page-title">
+          <span className="kicker">The Catalog{live ? " · live" : ""}</span>
+          <h1>Explore Scotch</h1>
+          <p>
+            {all.length} bottles across every style. Search, filter, and sort —
+            the 🏛️ badge marks Bottled-in-Bond bottles.
+          </p>
+        </div>
+
+        <Link to="/scan" className="scan-cta tap">
+          <CameraIcon size={22} />
+          <span>Scan a bottle to identify it</span>
+          <span style={{ marginLeft: "auto" }}>›</span>
+        </Link>
+
+        <input
+          className="field"
+          style={{ marginTop: 12 }}
+          aria-label="Search bottles"
+          placeholder="Search distillery, region, mash bill…"
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+        />
+
+        <div className="chips">
+          {filters.map((f) => (
+            <button
+              key={f}
+              className={`chip tap${active === f ? " active" : ""}`}
+              onClick={() => setActive(f)}
+            >
+              {f}
+            </button>
+          ))}
+        </div>
+
+        <div className="catalog-controls">
+          <select className="select-mini" aria-label="Sort bottles" value={sort} onChange={(e) => setSort(e.target.value as Sort)}>
+            {SORTS.map((s) => (
+              <option key={s.v} value={s.v}>{s.label}</option>
+            ))}
+          </select>
+          <select className="select-mini" aria-label="Filter by country" value={country} onChange={(e) => setCountry(e.target.value)}>
+            <option value="All">All Countries</option>
+            {countries.map((c) => <option key={c} value={c}>{c}</option>)}
+          </select>
+          <select className="select-mini" aria-label="Filter by region" value={region} onChange={(e) => setRegion(e.target.value)}>
+            <option value="All">All Regions</option>
+            {regions.slice(0, 30).map((r) => <option key={r} value={r}>{r}</option>)}
+          </select>
+          <span className="count-pill">{list.length}</span>
+        </div>
+        <div className="catalog-controls" style={{ marginTop: 6 }}>
+          <button className={`chip tap${afOnly ? " active" : ""}`} onClick={() => setAfOnly((v) => !v)}>
+            🏛️ Bottled-in-Bond{afCount ? ` · ${afCount}` : ""}
+          </button>
+          <button className={`chip tap${favOnly ? " active" : ""}`} onClick={() => setFavOnly((v) => !v)}>
+            ★ Favorites
+          </button>
+          {(country !== "All" || region !== "All" || afOnly || favOnly || active !== "All") && (
+            <button className="chip tap" onClick={() => { setActive("All"); setCountry("All"); setRegion("All"); setAfOnly(false); setFavOnly(false); setQ(""); }}>
+              ✕ Clear all
+            </button>
+          )}
+        </div>
+
+        {loading ? (
+          <div style={{ marginTop: 12 }}><SkeletonList rows={6} /></div>
+        ) : list.length === 0 ? (
+          <div className="empty-state" style={{ textAlign: "center", padding: "40px 12px" }}>
+            <div style={{ fontSize: 40 }}>🍸</div>
+            <p className="muted" style={{ marginTop: 8, fontSize: 14.5 }}>No bottles match those filters.</p>
+            <button className="btn ghost" style={{ marginTop: 10 }} onClick={() => { setActive("All"); setQ(""); setAfOnly(false); setFavOnly(false); setCountry("All"); setRegion("All"); }}>
+              Clear filters
+            </button>
+          </div>
+        ) : (
+          // Re-stagger on filter/sort change (not on every keystroke) for visual continuity.
+          <motion.div key={`${active}|${sort}|${afOnly}|${favOnly}|${country}|${region}`} className="list" style={{ marginTop: 12 }}>
+            {list.map((b, i) => (
+              <BottleCard key={b.id} bottle={b} index={Math.min(i, 8)} />
+            ))}
+          </motion.div>
+        )}
+        <Disclaimer />
+      </main>
+    </>
+  );
+}

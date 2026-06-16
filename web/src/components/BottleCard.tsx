@@ -1,0 +1,53 @@
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import type { Bottle } from "../types";
+import BottleVisual from "./BottleVisual";
+import { ChevronRight } from "../icons";
+
+export default function BottleCard({ bottle, index = 0 }: { bottle: Bottle; index?: number }) {
+  const imageUrl = bottle.imageKeys?.[0];
+  const accent = bottle.accent || "#722F37";
+  const style = bottle.style || bottle.expression || "Straight";
+  const producer = bottle.producer || bottle.brand || "";
+  const region = bottle.region || "";
+  const flavors = bottle.flavors ?? [];
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 14 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.05, duration: 0.32, ease: "easeOut" }}
+    >
+      <Link to={`/bottle/${bottle.id}`} className="bottle-card tap">
+        <div className="vessel" style={{ overflow: "hidden", padding: 0, border: "none", position: "relative" }}>
+          {imageUrl ? (
+            <img src={imageUrl} alt={bottle.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          ) : (
+            <BottleVisual name={producer} accent={accent} size={56} />
+          )}
+          {(bottle.style || bottle.expression) === "Bottled-in-Bond" && <span className="af-corner" title="Bottled-in-Bond" aria-label="Bottled-in-Bond">🏛️</span>}
+        </div>
+        <div className="body">
+          <span className="pill" style={{ background: accent }}>
+            <span className="dot" />
+            {style}
+          </span>
+          <h3 className="brand">{bottle.name}</h3>
+          <div className="meta">
+            {producer}{region ? ` · ${region}` : ""}
+          </div>
+          {flavors.length > 0 && (
+            <div className="taglist tags">
+              {flavors.slice(0, 3).map((f) => (
+                <span className="tag" key={f}>{f}</span>
+              ))}
+            </div>
+          )}
+        </div>
+        <span style={{ alignSelf: "center", color: "var(--muted)", display: "flex" }}>
+          <ChevronRight size={20} />
+        </span>
+      </Link>
+    </motion.div>
+  );
+}
