@@ -18,7 +18,7 @@ export default function TopNav() {
     <nav className="topnav">
       <div className="topnav-inner">
         <Link to="/home" className="topnav-brand" aria-label="Home">
-          <img src="/logo.svg" alt="Scotch Roam" />
+          <img src="/logo.svg" alt="Scotch Roam" style={{ height: 24, display: "block" }} />
         </Link>
         <div className="topnav-links">
           {items.map(({ to, label, Icon }) => (

@@ -36,7 +36,7 @@ export default function Home() {
               onError={(e) => { (e.currentTarget.closest(".home-hero-photo") as HTMLElement)?.classList.add("noimg"); }} />
           </div>
           <div className="home-hero-text">
-            <img src="/logo.svg" alt="Scotch Roam" className="home-hero-logo" />
+            <img src="/logo.svg" alt="Scotch Roam" className="home-hero-logo" style={{ height: 28, width: "auto" }} />
             <span className="kicker">{user ? "Welcome back" : "Welcome"}</span>
             <h1>{name ? `Cheers, ${name}` : "What are we tasting?"}</h1>
             <p>Learn it, explore it, host it — start anywhere.</p>
