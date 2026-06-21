@@ -54,3 +54,26 @@ const CATALOG: ProducerRow[] = [
 ];
 export const topWines: TopWineSeed[] = CATALOG.flatMap((row) => row.wines.map((w) => ({ producer: row.producer, name: w.name, wineType: w.type, region: w.region, country: row.country })));
 export const TOP_COUNT = topWines.length;
+
+// === Additional producers (expanded manifest) ===
+const CATALOG2:ProducerRow[]=[
+{producer:"Bruichladdich",country:"UK",wines:[{name:"Bruichladdich The Classic Laddie",type:SM,region:"Islay"},{name:"Bruichladdich Islay Barley",type:SM,region:"Islay"},{name:"Bruichladdich Port Charlotte 10",type:P,region:"Islay"},{name:"Bruichladdich Black Art",type:SM,region:"Islay"},{name:"Bruichladdich Octomore",type:P,region:"Islay"}]},
+{producer:"Bunnahabhain",country:"UK",wines:[{name:"Bunnahabhain 12 Year",type:SM,region:"Islay"},{name:"Bunnahabhain 18 Year",type:SM,region:"Islay"},{name:"Bunnahabhain Stiùireadair",type:SM,region:"Islay"},{name:"Bunnahabhain Toiteach",type:P,region:"Islay"}]},
+{producer:"Caol Ila",country:"UK",wines:[{name:"Caol Ila 12 Year",type:SM,region:"Islay"},{name:"Caol Ila 18 Year",type:SM,region:"Islay"},{name:"Caol Ila Distillers Edition",type:SM,region:"Islay"}]},
+{producer:"Dalmore",country:"UK",wines:[{name:"Dalmore 12 Year",type:SM,region:"Highland"},{name:"Dalmore 15 Year",type:SM,region:"Highland"},{name:"Dalmore 18 Year",type:SM,region:"Highland"},{name:"Dalmore King Alexander III",type:SM,region:"Highland"},{name:"Dalmore Cigar Malt",type:SM,region:"Highland"}]},
+{producer:"Craigellachie",country:"UK",wines:[{name:"Craigellachie 13 Year",type:SM,region:"Speyside"},{name:"Craigellachie 17 Year",type:SM,region:"Speyside"},{name:"Craigellachie 23 Year",type:SM,region:"Speyside"}]},
+{producer:"Edradour",country:"UK",wines:[{name:"Edradour 10 Year",type:SM,region:"Highland"},{name:"Edradour Caledonia 12 Year",type:SM,region:"Highland"},{name:"Edradour Ballechin 10",type:P,region:"Highland"}]},
+{producer:"Glen Scotia",country:"UK",wines:[{name:"Glen Scotia Double Cask",type:SM,region:"Campbeltown"},{name:"Glen Scotia 15 Year",type:SM,region:"Campbeltown"},{name:"Glen Scotia Victoriana",type:CS,region:"Campbeltown"},{name:"Glen Scotia 25 Year",type:SM,region:"Campbeltown"}]},
+{producer:"Glenallachie",country:"UK",wines:[{name:"GlenAllachie 10 Year",type:SM,region:"Speyside"},{name:"GlenAllachie 12 Year",type:SM,region:"Speyside"},{name:"GlenAllachie 15 Year",type:SM,region:"Speyside"},{name:"GlenAllachie 10 Year Cask Strength",type:CS,region:"Speyside"}]},
+{producer:"Tomatin",country:"UK",wines:[{name:"Tomatin 12 Year",type:SM,region:"Highland"},{name:"Tomatin 14 Year Port Finish",type:SM,region:"Highland"},{name:"Tomatin 18 Year",type:SM,region:"Highland"},{name:"Tomatin Legacy",type:SM,region:"Highland"}]},
+{producer:"Deanston",country:"UK",wines:[{name:"Deanston 12 Year",type:SM,region:"Highland"},{name:"Deanston 18 Year",type:SM,region:"Highland"},{name:"Deanston Virgin Oak",type:SM,region:"Highland"}]},
+{producer:"Tobermory",country:"UK",wines:[{name:"Tobermory 12 Year",type:SM,region:"Islands"},{name:"Tobermory Ledaig 10 Year",type:P,region:"Islands"},{name:"Tobermory 20 Year",type:SM,region:"Islands"}]},
+{producer:"Benromach",country:"UK",wines:[{name:"Benromach 10 Year",type:SM,region:"Speyside"},{name:"Benromach 15 Year",type:SM,region:"Speyside"},{name:"Benromach Peat Smoke",type:P,region:"Speyside"},{name:"Benromach Contrasts: Organic",type:SM,region:"Speyside"}]},
+{producer:"Glengoyne",country:"UK",wines:[{name:"Glengoyne 10 Year",type:SM,region:"Highland"},{name:"Glengoyne 12 Year",type:SM,region:"Highland"},{name:"Glengoyne 18 Year",type:SM,region:"Highland"},{name:"Glengoyne 21 Year",type:SM,region:"Highland"},{name:"Glengoyne Cask Strength",type:CS,region:"Highland"}]},
+{producer:"Glencadam",country:"UK",wines:[{name:"Glencadam 10 Year",type:SM,region:"Highland"},{name:"Glencadam 13 Year",type:SM,region:"Highland"},{name:"Glencadam 15 Year",type:SM,region:"Highland"}]},
+{producer:"Kilchoman",country:"UK",wines:[{name:"Kilchoman Machir Bay",type:P,region:"Islay"},{name:"Kilchoman Sanaig",type:P,region:"Islay"},{name:"Kilchoman Loch Gorm",type:P,region:"Islay"},{name:"Kilchoman 100% Islay",type:P,region:"Islay"}]},
+{producer:"Wolfburn",country:"UK",wines:[{name:"Wolfburn Northland",type:SM,region:"Highland"},{name:"Wolfburn Aurora",type:SM,region:"Highland"},{name:"Wolfburn Morven",type:P,region:"Highland"}]},
+{producer:"Compass Box",country:"UK",wines:[{name:"Compass Box Great King Street",type:B,region:"Scotland"},{name:"Compass Box Spice Tree",type:BM,region:"Scotland"},{name:"Compass Box Peat Monster",type:BM,region:"Scotland"},{name:"Compass Box Hedonism",type:SG,region:"Scotland"}]},
+];
+const expanded=CATALOG2.flatMap(row=>row.wines.map(w=>({producer:row.producer,name:w.name,wineType:w.type,region:w.region,country:row.country})));
+(topWines as TopWineSeed[]).push(...expanded);
